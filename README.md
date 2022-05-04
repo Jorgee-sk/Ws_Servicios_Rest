@@ -1,3 +1,3 @@
-# Ws-Spring
+# Ws-Servicios-Rest
 
-Ejercicios spring BABELCAMP
+Ejercicios servicios rest BABELCAMP
