@@ -22,8 +22,8 @@ public class ReservasController {
 	ReservaService service;
 	
 	@PostMapping(value="Reserva",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void altaReserva(@RequestBody Reserva reserva) {
-		service.altaReserva(reserva);
+	public void altaReserva(@RequestBody Reserva reserva, @RequestParam("plazas") int nPlazas) {
+		service.altaReserva(reserva, nPlazas);
 	}
 	
 	@GetMapping(value="Reservas", produces = MediaType.APPLICATION_JSON_VALUE)

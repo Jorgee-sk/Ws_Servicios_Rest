@@ -26,7 +26,7 @@ public class ReservaServiceImpl implements ReservaService{
 	}
 	
 	@Override
-	public void altaReserva(Reserva reserva) {
+	public void altaReserva(Reserva reserva, int nPlazas) {
 		reservasDao.save(reserva);
 		
 		Vuelo[] vuelos = restTemplate.getForObject(urlBase+"/Vuelos", Vuelo[].class);
@@ -35,7 +35,7 @@ public class ReservaServiceImpl implements ReservaService{
 		.collect(Collectors.toList()); 
 		
 		restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}"
-				, v.get(0), v.get(0).getIdVuelo(), v.get(0).getPlazas()-1);
+				, v.get(0), v.get(0).getIdVuelo(), v.get(0).getPlazas()-nPlazas);
 	}
 
 
