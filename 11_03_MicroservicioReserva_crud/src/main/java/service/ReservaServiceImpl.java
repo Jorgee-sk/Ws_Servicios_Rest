@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,7 +17,7 @@ import model.Vuelo;
 public class ReservaServiceImpl implements ReservaService{
 	
 	RestTemplate restTemplate;
-	String urlBase ="http://localhost:8000/crud";
+	String urlBase ="http://localhost:8000/V";
 	
 	ReservasDao reservasDao;
 
@@ -31,12 +33,21 @@ public class ReservaServiceImpl implements ReservaService{
 		
 		Vuelo[] vuelos = restTemplate.getForObject(urlBase+"/Vuelos", Vuelo[].class);
 		Vuelo v = Arrays.stream(vuelos)
-		.filter(s->s.getIdVuelo()==reserva.getVuelo())
+		.filter(s->s.getIdvuelo()==reserva.getVuelo())
 		.collect(Collectors.toList()).get(0); 
 		
 		if(nPlazas <= v.getPlazas()) {
-			reservasDao.save(reserva);
-			restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}",null,reserva.getVuelo(), nPlazas);
+			
+			ResponseEntity<String> response= restTemplate.exchange(urlBase+"/Vuelo/{idVuelo}/{plazas}",
+					HttpMethod.PUT,
+					null,
+					String.class,
+					reserva.getVuelo(), 
+					nPlazas);
+			
+			String cuerpo = response.getBody();
+			if(cuerpo.equals("true"))
+				reservasDao.save(reserva);
 		}
 		
 		

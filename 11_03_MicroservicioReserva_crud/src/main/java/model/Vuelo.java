@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Vuelo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idVuelo;
+	private int idvuelo;
 	private String company;
 	private String fecha;
 	private double precio;

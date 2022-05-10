@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idReserva;
+	private int idreserva;
 	private String nombre;
 	private String dni;
 	private int hotel;

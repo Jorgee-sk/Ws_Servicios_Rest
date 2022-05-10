@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+<script type="text/javascript">
+	function reservas(){
+		var url="http://localhost:9000/reserva/Reservas";  //esta era la dirección real del microservicio
+		
+		$.get(url,function(data,status){			
+			var res="";
+			//transforma texto JSON en objeto/array JSON			
+			for(var r of data){
+				res+="<tr><td>"+r.idreserva+"</td><td>"+r.hotel+"</td><td>"+r.vuelo+"</td><td>"+r.nombre+"</td></tr>";
+			}
+			
+			$("#tbody").html(res);
+		});
+	}
+</script>
+</head>
+<body onload="reservas();">
+	<div ng-app="comunicacionApp" ng-controller="comunicacionController" class="container">
+	<h1>Reservas</h1>
+			
+		
+		<br/>
+		<div >
+			<table border="1" class="table table-striped table-bordered" ng-init="cargar()">
+				<thead><tr><th>Numero de reserva</th><th>Hotel</th><th>Vuelo</th><th>Nombre</th></tr></thead>
+				<tbody id="tbody">
+				
+				</tbody>
+			</table>
+		</div>
+		<br/>
+		<a href="nuevareserva.html">Nueva Reserva</a>
+	</div>
+	
+	
+	
+	
+</body>
+</html>
