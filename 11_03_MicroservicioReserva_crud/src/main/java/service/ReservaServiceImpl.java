@@ -27,9 +27,19 @@ public class ReservaServiceImpl implements ReservaService{
 	
 	@Override
 	public void altaReserva(Reserva reserva, int nPlazas) {
-		reservasDao.save(reserva);
 		
-		restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}",null,reserva.getVuelo(), nPlazas);
+		
+		Vuelo[] vuelos = restTemplate.getForObject(urlBase+"/Vuelos", Vuelo[].class);
+		Vuelo v = Arrays.stream(vuelos)
+		.filter(s->s.getIdVuelo()==reserva.getVuelo())
+		.collect(Collectors.toList()).get(0); 
+		
+		if(nPlazas <= v.getPlazas()) {
+			reservasDao.save(reserva);
+			restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}",null,reserva.getVuelo(), nPlazas);
+		}
+		
+		
 	}
 
 
