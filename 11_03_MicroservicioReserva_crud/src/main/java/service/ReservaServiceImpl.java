@@ -29,13 +29,7 @@ public class ReservaServiceImpl implements ReservaService{
 	public void altaReserva(Reserva reserva, int nPlazas) {
 		reservasDao.save(reserva);
 		
-		Vuelo[] vuelos = restTemplate.getForObject(urlBase+"/Vuelos", Vuelo[].class);
-		List<Vuelo> v = Arrays.stream(vuelos)
-		.filter(s->s.getIdVuelo()==reserva.getVuelo())
-		.collect(Collectors.toList()); 
-		
-		restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}"
-				, v.get(0), v.get(0).getIdVuelo(), v.get(0).getPlazas()-nPlazas);
+		restTemplate.put(urlBase+"/Vuelo/{idVuelo}/{plazas}",null,reserva.getVuelo(), nPlazas);
 	}
 
 
