@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: servicio-hotel
+  cloud:
+    config:
+      uri:
+      - http://localhost:8888

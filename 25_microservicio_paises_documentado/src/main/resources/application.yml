@@ -1,0 +1,7 @@
+server:
+  port: 8500
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: servidor-gateway   
+  cloud: 
+    gateway: 
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+      routes:
+      - id: servHoteles #Id de la ruta (en realidad esto es solo un id pero no cumple ninguna otra funcion)
+          #1-Cuando se va a enrutar la peticion a un microservicio inscrito en Eureka, se usa el valor: "lb" + "//" + el nombre del microservicio TAL CUAL como se haya inscrito en el ecosistema EUREKA 
+          #2-Cuando se va a enrutar la peticion a un microservicio NO inscrito en Eureka, se coloca la URL real del microservicio al cual se quiere enrutar la peticion
+        uri: lb://servicio-hotel #http://localhost:8000 = URL real del microservicio de pedidos al cual se enrutara la peticion de entrada
+        predicates:
+          - Path=/shoteles/** #Cuando Gateway detecte que en la peticion URL venga este path, enrutara la peticion hacia el servicio indicado en la propiedad "uri" (lb://servicio-pedidos)
+        filters:
+          - RewritePath=/shoteles/*, / #Lo que indica es que a la url indicada en la propiedad "uri", se le adicionará un "/" mas todo lo que venga despues de "spedidos" en la petición URL de entrada          
+      - id: servVuelos
+        uri: lb://servicio-vuelos #http://localhost:8001
+        predicates:
+          - Path=/svuelos/**
+        filters:
+          - RewritePath=/svuelos/*, /
+      - id: servReservas
+        uri: lb://servicio-reservas 
+        predicates:
+          - Path=/sreservas/**
+        filters:
+          - RewritePath=/sreservas/*, /        
+server:
+  port: 10000
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
