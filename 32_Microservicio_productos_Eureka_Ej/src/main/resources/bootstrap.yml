@@ -1,6 +1,6 @@
 spring:
   application:
-    name: servicio-hotel
+    name: servicio-productos
   cloud:
     config:
       uri:

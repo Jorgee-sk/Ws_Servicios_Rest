@@ -31,7 +31,19 @@ spring:
         predicates:
           - Path=/sreservas/**
         filters:
-          - RewritePath=/sreservas/*, /        
+          - RewritePath=/sreservas/*, / 
+      - id: servProductos
+        uri: lb://servicio-productos 
+        predicates:
+          - Path=/sprod/**
+        filters:
+          - RewritePath=/sprod/*, /
+      - id: servPedidos
+        uri: lb://servicio-pedidos 
+        predicates:
+          - Path=/spedidos/**
+        filters:
+          - RewritePath=/spedidos/*, /        
 server:
   port: 10000
 eureka:

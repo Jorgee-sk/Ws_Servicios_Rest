@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$.date = function(dateObject) {
+	    var d = new Date(dateObject);
+	    
+	    var day = d.getDate();
+	    if (day < 10) { day = "0" + day }
+	    var month = d.getMonth() + 1;
+	    if (month < 10) { month = "0" + month }
+	    var year = d.getFullYear();
+	    
+	    var hour = d.getHours();
+	    if (hour < 10) { hour = "0" + hour }
+	    var min = d.getMinutes();
+	    if (min < 10) { min = "0" + min }
+	    var sec = d.getSeconds();
+	    if (sec < 10) { sec = "0" + sec }
+	    
+	    var date = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+	
+	    return date;
+	};
+
+	function reservas(){
+		var url="http://localhost:10000/spedidos/Pedidos/Pedidos";
+		
+		$.get(url,function(data,status){			
+			var res="";
+			//transforma texto JSON en objeto/array JSON			
+			for(var p of data){
+				res+="<tr><td>"+p.idPedido+"</td><td>"+p.codigoProducto+"</td><td>"+p.total+"</td><td>"+$.date(p.fechaPedido)+"</td></tr>";
+			}
+			
+			$("#pedidos").html(res);
+		});
+	}
+</script>
+
+</head>
+<body onload="reservas();">
+	<div ng-app="comunicacionApp" ng-controller="comunicacionController" class="container">
+		<h1>Reservas</h1>
+		<br />
+
+		<div>
+			<table border="1" class="table table-striped table-bordered" ng-init="cargar()">
+				<thead>
+					<tr>
+						<th>Numero de pedido</th>
+						<th>Producto</th>
+						<th>Total</th>
+						<th>Fecha de pedido</th>
+					</tr>
+				</thead>
+				<tbody id="pedidos">
+
+				</tbody>
+			</table>
+		</div>
+
+		<br /> <a href="nuevopedido.html">Nuevo pedido</a>
+	</div>
+
+</body>
+</html>

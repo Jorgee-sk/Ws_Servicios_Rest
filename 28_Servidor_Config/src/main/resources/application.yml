@@ -1,8 +1,15 @@
 server:
   port: 8888
 spring:
+  #profiles:
+    #active:
+    #- native
   cloud:
     config:
       server:
         git:
           uri: https://github.com/Jorgee-sk/servicios_config.git
+        #native:
+          #search-locations:
+          #- file:///c:\temp\config
+          

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: servicio-pedidos
+  cloud:
+    config:
+      uri:
+      - http://${hostconfig}:8888
