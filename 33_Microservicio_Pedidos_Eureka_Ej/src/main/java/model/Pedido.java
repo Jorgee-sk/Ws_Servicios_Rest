@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +31,6 @@ public class Pedido {
 	private int unidades;
 	private double total;
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern= "yyyy-MM-dd")
 	private Date fechaPedido;
 }

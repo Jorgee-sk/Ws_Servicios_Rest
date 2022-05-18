@@ -1,7 +1,8 @@
 package service;
 
+import java.security.Timestamp;
 import java.util.Arrays;
-
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,9 @@ public class PedidoServiceImpl implements PedidoService{
 					String.class,
 					pedido.getCodigoProducto(), 
 					pedido.getUnidades());
-			
+			pedido.setTotal(pedido.getUnidades()*p.getPrecioUnitario());
+			Date d = new Date(System.currentTimeMillis());
+			pedido.setFechaPedido(d);
 			String cuerpo = response.getBody();
 			if(cuerpo.equals("true"))
 				pedidosDao.save(pedido);
